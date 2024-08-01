@@ -1,0 +1,99 @@
+{
+  "d": {
+    "status": false,
+    "d": [
+      {
+        "Category": "CERMIN ",
+        "SubCategory": "DEPAN ",
+        "Type": 1
+      },
+      {
+        "Category": "CERMIN ",
+        "SubCategory": "KIRI/ KANAN ",
+        "Type": 1
+      },
+      {
+        "Category": "CERMIN ",
+        "SubCategory": "BELAKANG ",
+        "Type": 1
+      },
+      {
+        "Category": "LAMPU",
+        "SubCategory": "DEPAN/KIRI/KANAN ",
+        "Type": 1
+      },
+
+      {
+        "Category": "LAMPU",
+        "SubCategory": "FOG LAMP KIRI KANAN ",
+        "Type": 1
+      },
+      {
+        "Category": "LAMPU",
+        "SubCategory": "SIGNAL KIRI/KANAN ",
+        "Type": 1
+      },
+
+      {
+        "Category": "BREK",
+        "SubCategory": "DEPAN( L1/RI)",
+        "Type": 1
+      },
+      {
+        "Category": "BREK",
+        "SubCategory": "PEMACU (L2/L3/R2/R3)",
+        "Type": 1
+      },
+      {
+        "Category": "BREK",
+        "SubCategory": "BIGIE(L4/L5/R4/R5) ",
+        "Type": 1
+      },
+
+      {
+        "Category": "LESEN ",
+        "SubCategory": "MEMANDU ",
+        "Type": 1
+      },
+      {
+        "Category": "LESEN ",
+        "SubCategory": "PUSPAKOM DISC ",
+        "Type": 1
+      },
+      {
+        "Category": "ENJIN",
+        "SubCategory": "MUDGUARD /MUDFLAP",
+        "Type": 1
+      },
+
+      {
+        "Category": "SAFETY ",
+        "SubCategory": "SAFETY GLOVE ",
+        "Type": 1
+      },
+
+      {
+        "Category": "ENJIN",
+        "SubCategory": "MINYAK ENGIN ",
+        "Type": 1
+      },
+      {
+        "Category": "ENJIN",
+        "SubCategory": "CECAIR PENYEJUK-RADIATOR ",
+        "Type": 1
+      },
+
+      {
+        "Category": "SAFETY ",
+        "SubCategory": "TALI PINGGANG ",
+        "Type": 1
+      },
+
+      {
+        "Category": "ENJIN",
+        "SubCategory": "BATTERY ",
+        "Type": 1
+      }
+    ]
+  }
+}
