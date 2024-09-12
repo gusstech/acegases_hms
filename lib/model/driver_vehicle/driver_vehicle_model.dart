@@ -21,42 +21,6 @@ extension CatExtension on VehicleStatus {
   }
 }
 
-class DriverVehicleModel extends DisposableProvider {
-  String? vehicle;
-  VehicleStatus vehicleStatus = VehicleStatus.Poor;
-
-  List<String> vehicleList = [
-    "VGW 1212",
-    "VGW 3223",
-    "VGW 5234",
-    "VGW 2435",
-    "VGW 7412"
-  ];
-
-  DriverVehicleModel();
-
-  List<String> get getVehicleList => vehicleList;
-  String? get selectedVehicle => vehicle;
-  VehicleStatus? get selectedVehicleStatus => vehicleStatus;
-
-  void setVehicle(String t) {
-    vehicle = t;
-    print("object");
-    print(vehicle);
-    notifyListeners();
-  }
-
-  void setVehicleStatus(VehicleStatus t) {
-    vehicleStatus = t;
-    notifyListeners();
-  }
-
-  @override
-  void disposeValues() {
-    vehicle = null;
-  }
-}
-
 class VehicleModel {
   String? id;
   String? no;
@@ -83,4 +47,7 @@ class VehicleModel {
         "Status": status,
         "MDTUID": mdtuid,
       };
+
+  @override
+  String toString() => 'id : $id, name:$no';
 }

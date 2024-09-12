@@ -84,6 +84,30 @@ class PtiModel extends DisposableProvider {
   // Getter for checklist data
   List<Category> get checklistData => _checklistData ?? [];
 
+  Map<String, dynamic> toJson() {
+    return {
+      "checklistData":
+          checklistData.map((category) => category.toJson()).toList(),
+    };
+  }
+
+  String toSaveDataFormat() {
+    List<String> result = [];
+
+    for (Category category in checklistData) {
+      String categoryName = category.name;
+      for (var subCategory in category.subcategories) {
+        String subCatName = subCategory.name;
+        String type = subCategory.type ?? "1";
+        String status = subCategory.status.ptiStatusDisplayName;
+
+        result.add('$categoryName,$subCatName,$type,$status');
+      }
+    }
+
+    return result.join(';');
+  }
+
   // Setter for checklist data
   set checklistData(List<Category> newData) {
     _checklistData = newData;
@@ -221,6 +245,10 @@ class ChecklistData {
     // data.map((categoryJson) => Category.fromJson(categoryJson)).toList();
     return ChecklistData(categories: categories);
   }
+
+  Map<String, dynamic> toJson() => {
+        "categories": categories.map((category) => category.toJson()).toList(),
+      };
 }
 
 class Category {
@@ -228,18 +256,27 @@ class Category {
   final List<Subcategory> subcategories;
 
   Category({required this.name, required this.subcategories});
+
+  Map<String, dynamic> toJson() => {
+        "Category": name,
+        "Subcategories": subcategories.map((sub) => sub.toJson()).toList(),
+      };
 }
 
 class Subcategory {
   final String name;
+  final String? type;
   PTISliderStatus status;
 
-  Subcategory({required this.name, required this.status});
+  Subcategory({required this.name, this.type, required this.status});
 
   factory Subcategory.fromJson(Map<String, dynamic> json) {
     String name = json['SubCategory'];
+    String type = (json["Type"] ?? "1").toString();
     return Subcategory(
-        name: name, status: PTISliderStatus.none); // Default status to 'Poor'
+        name: name,
+        status: PTISliderStatus.none, // Default status to 'Poor'
+        type: type);
   }
 
   // Getter and Setter for status
@@ -248,4 +285,11 @@ class Subcategory {
   set setStatus(PTISliderStatus newStatus) {
     status = newStatus;
   }
+
+  Map<String, dynamic> toJson() => {
+        "SubCategory": name,
+        "Type": type ?? 1,
+        "Status": status
+            .ptiStatusDisplayName, // Assuming PTISliderStatus is an enum or similar
+      };
 }

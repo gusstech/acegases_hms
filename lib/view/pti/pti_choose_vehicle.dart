@@ -1,5 +1,6 @@
 import 'package:acegases_hms/Utils/qr_scanner.dart';
 import 'package:acegases_hms/Utils/utils.dart';
+import 'package:acegases_hms/appcache.dart/appcache.dart';
 import 'package:acegases_hms/controller/driver_vehicle/driver_vehicle_controller.dart';
 import 'package:acegases_hms/model/app_theme/app_theme_model.dart';
 import 'package:acegases_hms/model/driver_vehicle/driver_vehicle_model.dart';
@@ -26,15 +27,20 @@ class _PTISelectVehicleViewState extends State<PTISelectVehicleView> {
   void initState() {
     DriverVehicleController viewModel =
         Provider.of<DriverVehicleController>(context, listen: false);
-
-    viewModel.vehicleList.isNotEmpty &&
-            viewModel.vehicleList
-                .any((element) => element.id == viewModel.selectedVehicle?.id)
-        ? {
-            temp = viewModel.vehicleList.firstWhere(
-                (element) => element.id == viewModel.selectedVehicle?.id)
-          }
-        : viewModel.getVehicleList(context);
+    print(Appcache.selectedVehicle?.id);
+    print(Appcache.selectedVehicle?.id);
+    print(Appcache.selectedVehicle?.id);
+    print(Appcache.selectedVehicle?.id);
+    viewModel.getVehicleList(context).then((v) {
+      Appcache.vehicleList.isNotEmpty &&
+              Appcache.vehicleList
+                  .any((element) => element.id == Appcache.selectedVehicle?.id)
+          ? setState(() {
+              temp = Appcache.vehicleList.firstWhere(
+                  (element) => element.id == Appcache.selectedVehicle?.id);
+            })
+          : null;
+    });
 
     super.initState();
   }
@@ -73,7 +79,7 @@ class _PTISelectVehicleViewState extends State<PTISelectVehicleView> {
               ),
               DropdownButtonHideUnderline(
                 child: DropdownButton2<VehicleModel>(
-                  items: viewModel.vehicleList
+                  items: Appcache.vehicleList
                       .map((e) => DropdownMenuItem<VehicleModel>(
                             value: e,
                             child: Text(
@@ -115,6 +121,7 @@ class _PTISelectVehicleViewState extends State<PTISelectVehicleView> {
                                 color: Colors.white,
                                 size: 18,
                               ),
+                              contentPadding: EdgeInsets.only(top: 12),
                               hintStyle: TextStyle(color: Colors.white),
                               enabledBorder: InputBorder.none,
                               focusedBorder: InputBorder.none,
@@ -161,13 +168,33 @@ class _PTISelectVehicleViewState extends State<PTISelectVehicleView> {
                           ),
                         ),
                         InkWell(
-                          onTap: () {
-                            Navigator.of(context).push(
+                          onTap: () async {
+                            final result = await Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) =>
                                     BarcodeScannerWithOverlay(),
                               ),
                             );
+
+                            if (result != null) {
+                              Appcache.vehicleList.isNotEmpty &&
+                                      Appcache.vehicleList.any((element) =>
+                                          element.id ==
+                                          result.toString().split(";").last)
+                                  ? setState(() {
+                                      VehicleModel scannedDATA = Appcache
+                                          .vehicleList
+                                          .firstWhere((element) =>
+                                              element.id ==
+                                              result
+                                                  .toString()
+                                                  .split(";")
+                                                  .last);
+                                      temp = scannedDATA;
+                                      Appcache.selectedVehicle = scannedDATA;
+                                    })
+                                  : null;
+                            }
                           },
                           child: Container(
                               padding: const EdgeInsets.symmetric(
@@ -229,27 +256,32 @@ class _PTISelectVehicleViewState extends State<PTISelectVehicleView> {
                   padding: const EdgeInsets.all(18.0),
                   child:
                       Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            surfaceTintColor: Colors.transparent,
-                            shadowColor: Colors.transparent,
-                            backgroundColor: Colors.white,
-                            // foregroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                                side: BorderSide(
-                                    width: 3, color: Colors.red.shade600),
-                                borderRadius: BorderRadius.circular(8))),
-                        onPressed: () {
-                          // Navigator.pop(context);
-                          Navigator.pop(context);
-                        },
-                        child: Text(
-                          'Cancel',
-                          style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w800,
-                              color: Colors.red.shade500),
-                        )),
+                    Opacity(
+                      opacity: Appcache.selectedVehicle != null ? 1 : 0.3,
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              surfaceTintColor: Colors.transparent,
+                              shadowColor: Colors.transparent,
+                              backgroundColor: Colors.white,
+                              // foregroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                  side: BorderSide(
+                                      width: 3, color: Colors.red.shade600),
+                                  borderRadius: BorderRadius.circular(8))),
+                          onPressed: () {
+                            // Navigator.pop(context);
+                            Appcache.selectedVehicle != null
+                                ? Navigator.pop(context)
+                                : null;
+                          },
+                          child: Text(
+                            'Cancel',
+                            style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w800,
+                                color: Colors.red.shade500),
+                          )),
+                    ),
                     const SizedBox(
                       width: 12,
                     ),
@@ -328,7 +360,9 @@ class _PTISelectVehicleViewState extends State<PTISelectVehicleView> {
         });
   }
 
-  Future<dynamic> showList(BuildContext context, DriverVehicleModel viewModel,
+  Future<dynamic> showList(
+      BuildContext context,
+      DriverVehicleController viewModel,
       DriverVehicleController viewController) {
     return showDialog(
       context: context,
@@ -347,10 +381,10 @@ class _PTISelectVehicleViewState extends State<PTISelectVehicleView> {
               const SizedBox(
                 height: 6,
               ),
-              for (String data in viewModel.getVehicleList)
+              for (VehicleModel data in Appcache.vehicleList)
                 InkWell(
                   onTap: () {
-                    if (viewModel.vehicle != data) {
+                    if (Appcache.selectedVehicle?.no != data.no) {
                       // viewController.setStatus(context, VehicleStatus.Poor);
                     }
                     // viewController.setter(context, data);
@@ -367,7 +401,7 @@ class _PTISelectVehicleViewState extends State<PTISelectVehicleView> {
                                 //     .cardTextIndicator
                                 ))),
                     child: Text(
-                      "${data}",
+                      "${data.no}",
                       style: const TextStyle(
                           fontSize: 16, fontWeight: FontWeight.w600),
                     ),

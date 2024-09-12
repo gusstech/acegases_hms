@@ -1,5 +1,6 @@
 import 'package:acegases_hms/controller/auth/login_controller.dart';
 import 'package:acegases_hms/controller/driver_vehicle/driver_vehicle_controller.dart';
+import 'package:acegases_hms/controller/trip/trip_controller.dart';
 import 'package:acegases_hms/model/app_theme/app_theme_model.dart';
 import 'package:acegases_hms/model/driver_vehicle/driver_vehicle_model.dart';
 import 'package:acegases_hms/model/pti/pti_model.dart';
@@ -13,9 +14,6 @@ void main() {
     ChangeNotifierProvider<DriverVehicleController>(
       create: (context) => DriverVehicleController(),
     ),
-    ChangeNotifierProvider<DriverVehicleModel>(
-      create: (context) => DriverVehicleModel(),
-    ),
     ChangeNotifierProvider<PtiModel>(
       create: (context) => PtiModel(),
     ),
@@ -25,8 +23,13 @@ void main() {
     ChangeNotifierProvider<LoginController>(
       create: (context) => LoginController(),
     ),
+    ChangeNotifierProvider<TripController>(
+      create: (context) => TripController(),
+    ),
   ], child: const MyApp()));
 }
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -55,7 +58,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   void configEasyLoading() {
     EasyLoading.instance
       ..displayDuration = const Duration(milliseconds: 2000)
@@ -83,7 +85,6 @@ class _MyHomePageState extends State<MyHomePage> {
     return Consumer<ThemeModel>(builder: (context, controller, _) {
       return MaterialApp(
         title: 'AceGases HMS',
-        debugShowCheckedModeBanner: false,
         theme: controller.getTheme(),
         onGenerateRoute: AppRoutes.generatedRoute,
         initialRoute: AppRoutes.splashScreenRoute,

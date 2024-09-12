@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:acegases_hms/Utils/disposable_provider.dart';
 import 'package:acegases_hms/Utils/utils.dart';
+import 'package:acegases_hms/appcache.dart/appcache.dart';
 import 'package:acegases_hms/dio/api/vehicle_list_api.dart';
 import 'package:acegases_hms/model/driver_vehicle/driver_vehicle_model.dart';
 import 'package:flutter/material.dart';
@@ -8,14 +11,6 @@ import 'package:provider/provider.dart';
 // import model
 
 class DriverVehicleController extends DisposableProvider {
-  List<VehicleModel> _vehicleList = [];
-
-  List<VehicleModel> get vehicleList => _vehicleList;
-
-  VehicleModel? _selectedVehicle;
-
-  VehicleModel? get selectedVehicle => _selectedVehicle;
-
   DriverVehicleController();
 
   Future<bool> getVehicleList(BuildContext context) async {
@@ -24,9 +19,15 @@ class DriverVehicleController extends DisposableProvider {
     EasyLoading.show(maskType: EasyLoadingMaskType.black);
     await dioApi.getVehicleList().then((value) async {
       if (value.isNotEmpty) {
-        _vehicleList = value;
-        print("_vehicleList");
-        print(_vehicleList);
+        Appcache.vehicleList.clear();
+        // if (Appcache.selectedVehicle != null &&
+        //     !Appcache.vehicleList.any((e) {
+        //       return e.id == Appcache.selectedVehicle!.id;
+        //     })) {
+        //   Appcache.vehicleList.add(Appcache.selectedVehicle!);
+        // }
+        Appcache.vehicleList.addAll(value);
+
         notifyListeners();
       } else {
         Utils.printInfo('VEHICLE LSIT ERROR: ${value}');
@@ -37,12 +38,12 @@ class DriverVehicleController extends DisposableProvider {
       EasyLoading.dismiss();
     });
 
-    return _vehicleList.isNotEmpty;
+    return Appcache.vehicleList.isNotEmpty;
   }
 
   void setVehicle(VehicleModel t) {
-    _selectedVehicle = t;
-    notifyListeners();
+    Appcache.selectedVehicle = t;
+    Appcache.setString(Appcache.savedVehicle, jsonEncode(t));
   }
 
   // void setVehicleStatus(VehicleStatus t) {

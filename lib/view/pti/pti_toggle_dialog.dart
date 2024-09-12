@@ -1,4 +1,5 @@
 import 'package:acegases_hms/Utils/utils.dart';
+import 'package:acegases_hms/appcache.dart/appcache.dart';
 import 'package:acegases_hms/controller/driver_vehicle/driver_vehicle_controller.dart';
 import 'package:acegases_hms/model/driver_vehicle/driver_vehicle_model.dart';
 import 'package:acegases_hms/model/pti/pti_model.dart';
@@ -121,7 +122,9 @@ class PTIToggleDialogView extends StatelessWidget {
         });
   }
 
-  Future<dynamic> showList(BuildContext context, DriverVehicleModel viewModel,
+  Future<dynamic> showList(
+      BuildContext context,
+      DriverVehicleController viewModel,
       DriverVehicleController viewController) {
     return showDialog(
       context: context,
@@ -130,20 +133,20 @@ class PTIToggleDialogView extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
                 child: Text(
                   "Choose your vehicle",
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 6,
               ),
-              for (String data in viewModel.getVehicleList)
+              for (VehicleModel data in Appcache.vehicleList)
                 InkWell(
                   onTap: () {
-                    if (viewModel.vehicle != data) {
+                    if (Appcache.selectedVehicle?.no != data.no) {
                       // viewController.setStatus(context, VehicleStatus.Poor);
                     }
                     // viewController.setter(context, data);
@@ -152,21 +155,21 @@ class PTIToggleDialogView extends StatelessWidget {
                   child: Container(
                     alignment: Alignment.center,
                     width: MediaQuery.sizeOf(context).width * 0.5,
-                    margin: EdgeInsets.all(8),
-                    decoration: BoxDecoration(
+                    margin: const EdgeInsets.all(8),
+                    decoration: const BoxDecoration(
                         border: Border(
                             bottom: BorderSide(
                                 // color: Utils.getColor(context)
                                 //     .cardTextIndicator
                                 ))),
                     child: Text(
-                      "${data}",
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                      "${data.no}",
+                      style: const TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.w600),
                     ),
                   ),
                 ),
-              SizedBox(
+              const SizedBox(
                 height: 6,
               ),
             ],

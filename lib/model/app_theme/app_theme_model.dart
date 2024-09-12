@@ -75,11 +75,11 @@ class ThemeModel {
       backgroundColor: darkPurple, // Dark purple app bar background
       iconTheme: const IconThemeData(color: Colors.white),
       toolbarTextStyle: const TextTheme(
-        headline6: TextStyle(color: Colors.white), // White app bar title
-      ).bodyText2,
+        titleLarge: TextStyle(color: Colors.white), // White app bar title
+      ).bodyMedium,
       titleTextStyle: const TextTheme(
-        headline6: TextStyle(color: Colors.white), // White app bar title
-      ).headline6,
+        titleLarge: TextStyle(color: Colors.white), // White app bar title
+      ).titleLarge,
     ),
     dividerTheme: DividerThemeData(color: Colors.black54),
     dividerColor: Colors.black87,

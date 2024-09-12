@@ -7,6 +7,8 @@ import 'package:acegases_hms/model/pti/pti_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+enum PrintType { normal, error, success, warning }
+
 class Utils {
   static List<DisposableProvider> getDisposableProviders(BuildContext context) {
     return [
@@ -27,8 +29,27 @@ class Utils {
     });
   }
 
-  static printInfo(Object object) {
-    print(object);
+  static void unfocusContext(BuildContext context) {
+    FocusScopeNode currentFocus = FocusScope.of(context);
+    if (!currentFocus.hasPrimaryFocus) {
+      currentFocus.unfocus();
+    }
+  }
+
+  static printInfo(
+    var msg, {
+    PrintType? type,
+  }) {
+    switch (type) {
+      case PrintType.warning:
+        return print('\x1B[33${msg.toString()}\x1B[0m');
+      case PrintType.error:
+        return print('\x1B[31${msg.toString()}\x1B[0m');
+      case PrintType.success:
+        return print('\x1B[32m${msg.toString()}\x1B[0m');
+      default:
+        return print(msg.toString());
+    }
   }
 
   static printWrapped(String text) {

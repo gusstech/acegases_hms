@@ -38,6 +38,8 @@ class _BarcodeScannerWithOverlayState extends State<BarcodeScannerWithOverlay> {
               errorBuilder: (context, error, child) {
                 return ScannerErrorWidget(error: error);
               },
+              onDetect: (barcodes) => Navigator.of(context)
+                  .pop(barcodes.barcodes.first.displayValue),
               overlayBuilder: (context, constraints) {
                 return Padding(
                   padding: const EdgeInsets.all(16.0),

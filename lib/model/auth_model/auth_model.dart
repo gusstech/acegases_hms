@@ -1,21 +1,25 @@
-import 'package:acegases_hms/model/base_response_model.dart';
-
 class LoginModel {
   String? driverId;
   String? name;
   dynamic email;
   String? mobile;
   bool? result;
-  dynamic error;
+  String? error;
   bool? critUpdate;
   String? version;
   String? imei;
   bool? ptIstatus;
-  String? latestapk;
+  dynamic latestapk;
   String? driverLicenceNo;
   String? driverDob;
   String? driverDateOfJoining;
   String? gdlExpiryDate;
+  bool? gdlResult;
+  String? gdlError;
+  bool? licenceResult;
+  String? licenceError;
+  bool? passPortResult;
+  String? passPortError;
 
   LoginModel({
     this.driverId,
@@ -33,6 +37,12 @@ class LoginModel {
     this.driverDob,
     this.driverDateOfJoining,
     this.gdlExpiryDate,
+    this.gdlResult,
+    this.gdlError,
+    this.licenceResult,
+    this.licenceError,
+    this.passPortResult,
+    this.passPortError,
   });
 
   factory LoginModel.fromJson(Map<String, dynamic> json) => LoginModel(
@@ -51,6 +61,12 @@ class LoginModel {
         driverDob: json["Driver_DOB"],
         driverDateOfJoining: json["Driver_Date_Of_Joining"],
         gdlExpiryDate: json["GDLExpiryDate"],
+        gdlResult: json["GDLResult"],
+        gdlError: json["GDLError"],
+        licenceResult: json["LicenceResult"],
+        licenceError: json["LicenceError"],
+        passPortResult: json["PassPortResult"],
+        passPortError: json["PassPortError"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -69,11 +85,11 @@ class LoginModel {
         "Driver_DOB": driverDob,
         "Driver_Date_Of_Joining": driverDateOfJoining,
         "GDLExpiryDate": gdlExpiryDate,
+        "GDLResult": gdlResult,
+        "GDLError": gdlError,
+        "LicenceResult": licenceResult,
+        "LicenceError": licenceError,
+        "PassPortResult": passPortResult,
+        "PassPortError": passPortError,
       };
-
-  @override
-  Map<String, dynamic> toMap() {
-    // TODO: implement toMap
-    throw UnimplementedError();
-  }
 }

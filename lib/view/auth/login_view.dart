@@ -1,4 +1,5 @@
 import 'package:acegases_hms/Utils/contants.dart';
+import 'package:acegases_hms/appcache.dart/appcache.dart';
 import 'package:acegases_hms/controller/auth/login_controller.dart';
 import 'package:acegases_hms/routes/app_routes.dart';
 import 'package:flutter/cupertino.dart';
@@ -24,9 +25,16 @@ class LoginView extends StatelessWidget {
           ),
           decoration: BoxDecoration(
             gradient: LinearGradient(
-                colors: [Colors.deepPurple.shade700, Colors.red.shade300],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight),
+                colors: [
+                  Colors.deepPurple.shade700,
+                  Colors.deepPurple.shade500,
+                  Colors.deepPurple.shade400,
+                  Colors.deepPurple.shade200,
+                  Colors.deepPurple.shade100
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                stops: const [0.05, 0.2, 0.3, 0.4, 0.5]),
           ),
           width: screenWidth,
           height: screenHeight,
@@ -143,6 +151,7 @@ class LoginView extends StatelessWidget {
                               controller: loginController.password,
                               onChanged: (value) =>
                                   loginController.validatePass(value),
+                              obscureText: true,
                               decoration: InputDecoration(
                                   hintText: "Password ",
                                   hintStyle: TextStyle(color: Colors.white38),
@@ -171,24 +180,24 @@ class LoginView extends StatelessWidget {
                         : const SizedBox(
                             height: 4,
                           ),
-                    InkWell(
-                      onTap: () {},
-                      child: const Padding(
-                        padding: EdgeInsets.all(4.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Text(
-                              "Forgot Password ?",
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w900,
-                                  color: Colors.white60),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                    // InkWell(
+                    //   onTap: () {},
+                    //   child: const Padding(
+                    //     padding: EdgeInsets.all(4.0),
+                    //     child: Row(
+                    //       mainAxisAlignment: MainAxisAlignment.end,
+                    //       children: [
+                    //         Text(
+                    //           "Forgot Password ?",
+                    //           style: TextStyle(
+                    //               fontSize: 14,
+                    //               fontWeight: FontWeight.w900,
+                    //               color: Colors.white60),
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
                     const SizedBox(
                       height: 20,
                     ),
@@ -203,7 +212,8 @@ class LoginView extends StatelessWidget {
                                 Navigator.pushNamedAndRemoveUntil(
                                     context,
                                     AppRoutes.ptiPmSelectionScreenRoute,
-                                    (route) => false);
+                                    (route) => false,
+                                    arguments: false);
                               }
                             });
                           },
@@ -225,8 +235,8 @@ class LoginView extends StatelessWidget {
                 padding: const EdgeInsets.all(12.0),
                 child: Column(
                   children: [
-                    const Text(
-                      "v1.0.0 (1)",
+                    Text(
+                      "${Appcache.packageInfo.version} (${Appcache.packageInfo.buildNumber})",
                       style:
                           TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
                     ),

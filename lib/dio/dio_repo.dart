@@ -17,7 +17,6 @@ class DioRepo {
   Dio baseConfig() {
     Dio dio = Dio();
 
-    dio.options.headers.addAll(headers);
     dio.options.baseUrl = "https://acegasestms.x1.com.my/AppWebService.asmx";
     dio.options.connectTimeout = Duration(milliseconds: 30000);
     dio.options.receiveTimeout = Duration(milliseconds: 30000);
@@ -46,6 +45,7 @@ class DioRepo {
             EasyLoading.dismiss();
           }
           showErrorDialog("Error", "An error occurred");
+
           return handler.next(e);
         },
         onResponse: (response, handler) {
@@ -76,14 +76,14 @@ class DioRepo {
     showDialog(
       context: dioContext,
       barrierDismissible: true,
-      builder: (_) => CupertinoAlertDialog(
+      builder: (context) => CupertinoAlertDialog(
         title: Text(title),
         content: Text(message),
         actions: <Widget>[
           CupertinoDialogAction(
             child: const Text('Close'),
             onPressed: () {
-              Navigator.pop(dioContext);
+              Navigator.pop(context);
               // AppCache.removeAuthToken();
 
               // Navigator.pushAndRemoveUntil(

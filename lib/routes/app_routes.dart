@@ -7,6 +7,8 @@ import 'package:acegases_hms/view/pti/pti_checklist_view.dart';
 import 'package:acegases_hms/view/pti/pti_view.dart';
 import 'package:flutter/material.dart';
 
+import '../model/trip_model/trip_model.dart';
+
 class AppRoutes {
   static const String splashScreenRoute = "splash_screen";
   static const String loginScreenRoute = "login_screen";
@@ -25,16 +27,24 @@ class AppRoutes {
       case homeScreenRoute:
         return MaterialPageRoute(builder: (_) => HomeView());
       case ptiPmSelectionScreenRoute:
-        return new MaterialPageRoute(
-            builder: (_) => const PtiView(
-                  destination: '',
+        var argument = settings.arguments as bool;
+        return MaterialPageRoute(
+            builder: (_) => PtiView(
+                  fromMain: argument,
                 ));
       case ptiPmCheckListScreenRoute:
         return MaterialPageRoute(builder: (_) => const PTICheckListView());
       case jobDetailScreenRoute:
-        return MaterialPageRoute(builder: (_) => JobDetailView());
+        var argument = settings.arguments as TripDataDTO;
+        return MaterialPageRoute(
+            builder: (_) => JobDetailView(
+                  data: argument,
+                ));
       case updateJobDetailScreenRoute:
-        return MaterialPageRoute(builder: (_) => UpdateJobDetailViewDartView());
+        var argument = settings.arguments as TripJob;
+
+        return MaterialPageRoute(
+            builder: (_) => UpdateJobDetailViewDartView(data: argument));
       default:
         return MaterialPageRoute(builder: (_) => const SplashScreen());
     }
