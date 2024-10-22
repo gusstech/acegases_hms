@@ -1,3 +1,4 @@
+import 'package:acegases_hms/Utils/custom_dialog.dart';
 import 'package:acegases_hms/Utils/qr_scanner.dart';
 import 'package:acegases_hms/Utils/utils.dart';
 import 'package:acegases_hms/appcache.dart/appcache.dart';
@@ -132,7 +133,7 @@ class _PTISelectVehicleViewState extends State<PTISelectVehicleView> {
                     margin: const EdgeInsets.symmetric(horizontal: 16),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
-                      color: Colors.deepPurple.shade500,
+                      color: Colors.red.shade500,
                     ),
                     child: Row(
                       children: [
@@ -262,11 +263,11 @@ class _PTISelectVehicleViewState extends State<PTISelectVehicleView> {
                           style: ElevatedButton.styleFrom(
                               surfaceTintColor: Colors.transparent,
                               shadowColor: Colors.transparent,
-                              backgroundColor: Colors.white,
+                              backgroundColor: Colors.black,
                               // foregroundColor: Colors.white,
                               shape: RoundedRectangleBorder(
-                                  side: BorderSide(
-                                      width: 3, color: Colors.red.shade600),
+                                  // side: BorderSide(
+                                  //     width: 3, color: Colors.red.shade600),
                                   borderRadius: BorderRadius.circular(8))),
                           onPressed: () {
                             // Navigator.pop(context);
@@ -275,11 +276,11 @@ class _PTISelectVehicleViewState extends State<PTISelectVehicleView> {
                                 : null;
                           },
                           child: Text(
-                            'Cancel',
+                            'CANCEL',
                             style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w800,
-                                color: Colors.red.shade500),
+                                color: Colors.white),
                           )),
                     ),
                     const SizedBox(
@@ -289,12 +290,13 @@ class _PTISelectVehicleViewState extends State<PTISelectVehicleView> {
                         style: ElevatedButton.styleFrom(
                             surfaceTintColor: Colors.transparent,
                             shadowColor: Colors.transparent,
-                            backgroundColor: Colors.lightGreen.shade600,
+                            backgroundColor: Colors.red.shade600,
                             // foregroundColor: Colors.white,
                             shape: RoundedRectangleBorder(
-                                side: BorderSide(
-                                    width: 3,
-                                    color: Colors.lightGreen.shade600),
+                                // side: BorderSide(
+                                //   width: 3,
+                                //   color: Colors.black,
+                                // ),
                                 borderRadius: BorderRadius.circular(8))),
                         onPressed: () {
                           if (temp != null) {
@@ -323,39 +325,11 @@ class _PTISelectVehicleViewState extends State<PTISelectVehicleView> {
     return showDialog(
         context: ctx,
         builder: (context) {
-          return AlertDialog(
-            icon: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle, color: Colors.amber.shade600),
-                child: const Icon(
-                  CupertinoIcons.exclamationmark,
-                  color: Colors.white,
-                  size: 36,
-                )),
-            title: const Text(
-              "Please choose a vehicle to continue",
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w800,
-              ),
-            ),
-            actions: [
-              InkWell(
-                onTap: () => Navigator.pop(context),
-                child: Container(
-                    width: 80,
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6),
-                        color: Utils.getColor(context).buttonBackgroundColor),
-                    child: const Text(
-                      "OKAY",
-                      style: TextStyle(color: Colors.white),
-                    )),
-              )
-            ],
+          return CustomAlertDialog(
+            type: CustomAlertType.alert,
+            description: "Please choose a vehicle to continue",
+            popButtonText: "OKAY",
+            isLogout: false,
           );
         });
   }

@@ -60,7 +60,7 @@ class _HomeViewState extends State<HomeView> {
         return Scaffold(
           key: _homeKey,
           drawer: Drawer(
-            backgroundColor: Colors.deepPurple.shade100,
+            backgroundColor: Colors.red.shade100,
             child: Column(
               children: <Widget>[
                 ListTile(
@@ -181,11 +181,11 @@ class _HomeViewState extends State<HomeView> {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                   colors: [
-                    Colors.deepPurple.shade700,
-                    Colors.deepPurple.shade500,
-                    Colors.deepPurple.shade400,
-                    Colors.deepPurple.shade200,
-                    Colors.deepPurple.shade100
+                    Colors.red.shade500,
+                    Colors.red.shade300,
+                    Colors.red.shade200,
+                    Colors.red.shade100,
+                    Colors.red.shade50
                   ],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
@@ -485,7 +485,7 @@ class _HomeViewState extends State<HomeView> {
                   ),
                 ),
                 const SizedBox(
-                  height: 12,
+                  height: 15,
                 ),
                 Expanded(
                   child: Column(
@@ -497,11 +497,11 @@ class _HomeViewState extends State<HomeView> {
                         child: Row(
                           children: [
                             const Text(
-                              "Trip List",
+                              "TRIP LIST",
                               style: TextStyle(
                                 fontSize: 18,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.black87,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
                               ),
                             ),
                             const SizedBox(
@@ -538,13 +538,13 @@ class _HomeViewState extends State<HomeView> {
                                         offset: Offset(2, 2),
                                       )
                                     ],
-                                    color: Colors.deepPurple.shade300,
+                                    color: Colors.red.shade600,
                                     borderRadius: BorderRadius.circular(6),
                                   ),
                                   child: const Row(
                                     children: [
                                       Text(
-                                        "Refresh",
+                                        "REFRESH",
                                         style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 14,
@@ -871,7 +871,7 @@ class _TripListCardState extends State<TripListCard> {
                             padding: const EdgeInsets.symmetric(vertical: 4),
                             margin: const EdgeInsets.only(top: 8),
                             decoration: BoxDecoration(
-                                color: Colors.deepPurple.shade500,
+                                color: Colors.red.shade500,
                                 borderRadius: BorderRadius.circular(5)),
                             child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,

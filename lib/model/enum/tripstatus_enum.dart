@@ -7,7 +7,7 @@ extension CatExtension on TripStatus {
     return [
       Colors.red.shade500,
       Colors.green.shade500,
-      Colors.yellow.shade700,
+      Colors.yellow.shade800,
     ][index];
   }
 

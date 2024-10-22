@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class PdcSkipRedoDialog extends StatelessWidget {
-  
   const PdcSkipRedoDialog({
     super.key,
   });
@@ -29,7 +28,7 @@ class PdcSkipRedoDialog extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const SizedBox(
-                    height: 16,
+                    height: 8,
                   ),
                   Text(
                     "Would you like to submit PDC?",
@@ -39,7 +38,7 @@ class PdcSkipRedoDialog extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    height: 16,
+                    height: 20,
                   ),
                   Align(
                     alignment: Alignment.bottomRight,
@@ -49,20 +48,17 @@ class PdcSkipRedoDialog extends StatelessWidget {
                         InkWell(
                           onTap: () => Navigator.of(context).pop(false),
                           child: Container(
-                            width: 60,
                             alignment: Alignment.center,
-                            padding: const EdgeInsets.symmetric(vertical: 4),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 6, horizontal: 12),
                             decoration: BoxDecoration(
                                 // color: Colors.red.shade400,
-                                border: Border.all(
-                                  width: 3,
-                                  color: Colors.red.shade400,
-                                ),
-                                borderRadius: BorderRadius.circular(8)),
+                                color: Colors.black,
+                                borderRadius: BorderRadius.circular(6)),
                             child: Text(
-                              "NO",
+                              "CANCEL",
                               style: TextStyle(
-                                  color: Colors.red.shade400,
+                                  color: Colors.white,
                                   fontWeight: FontWeight.w800),
                             ),
                           ),
@@ -71,18 +67,14 @@ class PdcSkipRedoDialog extends StatelessWidget {
                         InkWell(
                           onTap: () => Navigator.of(context).pop(true),
                           child: Container(
-                            width: 60,
                             alignment: Alignment.center,
-                            padding: const EdgeInsets.symmetric(vertical: 4),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 6, horizontal: 12),
                             decoration: BoxDecoration(
-                                color: Colors.deepPurple.shade500,
-                                border: Border.all(
-                                  width: 3,
-                                  color: Colors.deepPurple.shade500,
-                                ),
-                                borderRadius: BorderRadius.circular(8)),
+                                color: Colors.red.shade500,
+                                borderRadius: BorderRadius.circular(6)),
                             child: Text(
-                              "YES",
+                              "CONFIRM",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w800),
@@ -106,7 +98,7 @@ class PdcSkipRedoDialog extends StatelessWidget {
                     shape: BoxShape.circle),
                 child: Icon(
                   CustomAlertType.alert.iconData,
-                  color: Colors.deepPurple.shade400,
+                  color: Colors.red.shade400,
                   size: 80,
                 ),
               ),

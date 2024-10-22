@@ -6,6 +6,7 @@ import 'package:acegases_hms/controller/auth/login_controller.dart';
 import 'package:acegases_hms/model/auth_model/auth_model.dart';
 import 'package:acegases_hms/model/driver_vehicle/driver_vehicle_model.dart';
 import 'package:acegases_hms/routes/app_routes.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -25,15 +26,22 @@ class _SplashScreen extends State<SplashScreen> {
   void initState() {
     // Utils.setFirebaseAnalyticsCurrentScreen(Constants.analyticsSplashScreen);
     super.initState();
-    startTimer();
     _initPackageInfo();
+    Future.delayed(Duration(milliseconds: 500), () {
+      startTimer();
+    });
   }
 
   Future<void> _initPackageInfo() async {
-    final info = await PackageInfo.fromPlatform();
-    setState(() {
-      Appcache.packageInfo = info;
-    });
+    FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.instance;
+    await remoteConfig.fetchAndActivate();
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    Appcache.packageInfo = packageInfo;
+    String currentLiveVersion =
+        remoteConfig.getValue("current_version").asString();
+    String currentLiveBuild = remoteConfig.getValue("build_version").asString();
+
+    Appcache.liveVersion = "$currentLiveVersion.$currentLiveBuild";
   }
 
   startTimer() async {

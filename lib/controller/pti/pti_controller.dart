@@ -20,8 +20,7 @@ import 'package:provider/provider.dart';
 class PtiController {
   PtiController();
   final picker = ImagePicker();
-  File? imgFile;
-  var imageFiles;
+
   TextEditingController ptiRemark = TextEditingController();
   Future<void> loadChecklistData(BuildContext context) async {
     PtiModel viewModel = Provider.of<PtiModel>(context, listen: false);
@@ -86,101 +85,5 @@ class PtiController {
     });
 
     return result?.result ?? false;
-  }
-
-  Future getImage(
-    BuildContext ctx,
-    source,
-  ) async {
-    try {
-      final pickedFile = await picker.pickImage(source: source);
-      if (pickedFile != null) {
-        imageFiles = await pickedFile.readAsBytes();
-        imgFile = File(pickedFile.path);
-
-        print("Image selected successfully: ${pickedFile.path}");
-        try {
-          // var headers = {
-          //   'Content-Type': 'application/json',
-          // };
-          // var data = {
-          //   "id": parent!.workOrders,
-          // };
-          var data = FormData.fromMap({
-            'files': [
-              await MultipartFile.fromFile(pickedFile!.path,
-                  filename:
-                      "${Appcache.usrRef?.driverId}_${Appcache.selectedVehicle?.id}" +
-                          DateTime.now().toString())
-            ],
-          });
-
-          var dio = Dio();
-
-          var response = await dio.request(
-            'https://acegasestms.x1.com.my/ReceiveFilePdc.ashx?Driverid=${Appcache.usrRef?.driverId}&PMid=${Appcache.selectedVehicle?.id}',
-            options: Options(
-              method: 'POST',
-            ),
-            data: data,
-          );
-          print(response.headers);
-          print(response.realUri);
-          if (response.statusCode == 200) {
-            showDialog(
-              context: ctx,
-              // barrierColor: Colors.transparent,
-              barrierDismissible: true,
-              builder: (context) => CustomAlertDialog(
-                type: CustomAlertType.success,
-                description: "Succesfully upload image",
-                popButtonText: "OK",
-              ),
-            );
-          } else {
-            print("error1");
-            showDialog(
-              context: ctx,
-              // barrierColor: Colors.transparent,
-              barrierDismissible: true,
-              builder: (context) => CustomAlertDialog(
-                type: CustomAlertType.error,
-                description: "Failed to upload image.",
-                popButtonText: "OK",
-              ),
-            );
-          }
-        } catch (error) {
-          print("error2");
-          showDialog(
-            context: ctx,
-            // barrierColor: Colors.transparent,
-            barrierDismissible: true,
-            builder: (context) => CustomAlertDialog(
-              type: CustomAlertType.error,
-              description: "Failed to upload image.",
-              popButtonText: "OK",
-            ),
-          );
-          // _alertType = CustomAlertType.error;
-        }
-      }
-    } on PlatformException catch (e) {
-      print("PlatformException: ${e.message}");
-    } catch (error) {
-      print("error3");
-      print(error);
-      showDialog(
-        context: ctx,
-        // barrierColor: Colors.transparent,
-        barrierDismissible: true,
-        builder: (context) => CustomAlertDialog(
-          type: CustomAlertType.error,
-          description: "Failed to upload image.",
-          popButtonText: "OK",
-        ),
-      );
-      // Utils.showAlertDialog(context, 'Error', 'Something went wrong');
-    }
   }
 }

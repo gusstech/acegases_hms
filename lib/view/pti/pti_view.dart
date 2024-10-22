@@ -1,10 +1,13 @@
 import 'package:acegases_hms/Utils/custom_dialog.dart';
+import 'package:acegases_hms/Utils/upload_image.dart';
 import 'package:acegases_hms/Utils/utils.dart';
 import 'package:acegases_hms/appcache.dart/appcache.dart';
 import 'package:acegases_hms/components/pti_toggle_switch.dart';
 import 'package:acegases_hms/controller/auth/login_controller.dart';
 import 'package:acegases_hms/controller/driver_vehicle/driver_vehicle_controller.dart';
+import 'package:acegases_hms/controller/image/image_controller.dart';
 import 'package:acegases_hms/controller/pti/pti_controller.dart';
+import 'package:acegases_hms/controller/update/remote_config.dart';
 import 'package:acegases_hms/model/driver_vehicle/driver_vehicle_model.dart';
 import 'package:acegases_hms/model/pti/pti_model.dart';
 import 'package:acegases_hms/routes/app_routes.dart';
@@ -25,11 +28,12 @@ class PtiView extends StatefulWidget {
   State<PtiView> createState() => _PtiViewState();
 }
 
-class _PtiViewState extends State<PtiView> {
+class _PtiViewState extends State<PtiView> with AppRemoteConfig {
   bool init = true;
   @override
   void initState() {
     super.initState();
+    // checkConfig(context);
   }
 
   showSelection(PtiController viewController, BuildContext context) async {
@@ -111,165 +115,174 @@ class _PtiViewState extends State<PtiView> {
   Widget build(BuildContext context) {
     PtiController viewController = PtiController();
 
-    return Consumer2<PtiModel, DriverVehicleController>(
-      builder: (context, viewModel, vehicleModel, child) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          if (mounted && init) {
-            showSelection(viewController, context);
-            setState(() {
-              init = false;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(Duration(milliseconds: 500), () {
+        checkConfig(context);
+      });
+    });
+    return ChangeNotifierProvider(
+        create: (context) => ImageController(),
+        child: Consumer2<PtiModel, DriverVehicleController>(
+          builder: (context, viewModel, vehicleModel, child) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              if (mounted && init) {
+                showSelection(viewController, context);
+                setState(() {
+                  init = false;
+                });
+              }
             });
-          }
-        });
-        // Appcache.selectedVehicle != null && viewModel.checklistData.isEmpty
-        //     ? viewController.getPTICheckList(context)
-        //     : WidgetsBinding.instance.addPostFrameCallback((_) {
-        //         if (mounted && init) {
-        //           showSelection(viewController, context);
+            // Appcache.selectedVehicle != null && viewModel.checklistData.isEmpty
+            //     ? viewController.getPTICheckList(context)
+            //     : WidgetsBinding.instance.addPostFrameCallback((_) {
+            //         if (mounted && init) {
+            //           showSelection(viewController, context);
 
-        //           setState(() {
-        //             init = false;
-        //           });
-        //         }
-        //       });
+            //           setState(() {
+            //             init = false;
+            //           });
+            //         }
+            //       });
 
-        return GestureDetector(
-          onTap: () => Utils.unfocusContext(context),
-          child: Scaffold(
-            resizeToAvoidBottomInset: false,
-            appBar: AppBar(
-              automaticallyImplyLeading: false,
-              centerTitle: false,
-              title: Row(children: [
-                InkWell(
-                  onTap: () async {
-                    viewController.ptiRemark.text = '';
-                    viewModel.checklistData.clear();
+            return GestureDetector(
+              onTap: () => Utils.unfocusContext(context),
+              child: Scaffold(
+                resizeToAvoidBottomInset: false,
+                appBar: AppBar(
+                  automaticallyImplyLeading: false,
+                  centerTitle: false,
+                  title: Row(children: [
+                    InkWell(
+                      onTap: () async {
+                        viewController.ptiRemark.text = '';
+                        viewModel.checklistData.clear();
 
-                    widget.fromMain
-                        ? Navigator.pop(context)
-                        : Navigator.pushReplacementNamed(
-                            context, AppRoutes.homeScreenRoute);
-                  },
-                  child: Container(
-                    padding: widget.fromMain
-                        ? null
-                        : const EdgeInsets.symmetric(
-                            horizontal: 4, vertical: 3),
-                    decoration: widget.fromMain
-                        ? null
-                        : BoxDecoration(
-                            border: Border.all(color: Colors.white),
-                            borderRadius: BorderRadius.circular(5)),
-                    child: widget.fromMain
-                        ? Icon(Icons.chevron_left,
-                            size: 36, weight: 100, color: Colors.white)
-                        : Row(
-                            children: [
-                              Icon(
-                                Icons.next_plan_outlined,
-                                size: 20,
+                        widget.fromMain
+                            ? Navigator.pop(context)
+                            : Navigator.pushReplacementNamed(
+                                context, AppRoutes.homeScreenRoute);
+                      },
+                      child: Container(
+                        padding: widget.fromMain
+                            ? null
+                            : const EdgeInsets.symmetric(
+                                horizontal: 4, vertical: 3),
+                        decoration: widget.fromMain
+                            ? null
+                            : BoxDecoration(
+                                border: Border.all(color: Colors.white),
+                                borderRadius: BorderRadius.circular(5)),
+                        child: widget.fromMain
+                            ? Icon(Icons.chevron_left,
+                                size: 36, weight: 100, color: Colors.white)
+                            : Row(
+                                children: [
+                                  Icon(
+                                    Icons.next_plan_outlined,
+                                    size: 20,
+                                  ),
+                                  SizedBox(
+                                    width: 4,
+                                  ),
+                                  Text(
+                                    "SKIP ",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w900),
+                                  ),
+                                ],
                               ),
-                              SizedBox(
-                                width: 4,
-                              ),
-                              Text(
-                                "SKIP ",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w900),
-                              ),
-                            ],
-                          ),
-                  ),
-                ),
-                SizedBox(
-                  width: 16,
-                ),
-                const Text(
-                  "PRE-DELIVERY CHECK ",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w900),
-                ),
-                const Spacer(
-                  flex: 1,
-                ),
-                InkWell(
-                  onTap: () async {
-                    final result = await logutDialog(context);
-                    if (result != null && result) {
-                      LoginController controller =
-                          Provider.of<LoginController>(context, listen: false);
-                      controller.logOutUser(context);
-                      Appcache.removeValues(Appcache.loginDate);
-                      Appcache.removeValues(Appcache.userCredential);
-                      Appcache.removeValues(Appcache.savedVehicle);
-                      Appcache.usrRef = null;
-                      Appcache.selectedVehicle = null;
-                      Utils.disposeAllDisposableProviders(context);
-                      Navigator.pushNamedAndRemoveUntil(context,
-                          AppRoutes.loginScreenRoute, (route) => false);
-                    }
-                  },
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                    decoration: BoxDecoration(
-                        // color: Colors.red,
-                        // borderRadius: BorderRadius.circular(6),
-                        // border: Border.all(color: Colors.white, width: 2),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 16,
+                    ),
+                    const Text(
+                      "PRE-DELIVERY CHECK ",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w900),
+                    ),
+                    const Spacer(
+                      flex: 1,
+                    ),
+                    InkWell(
+                      onTap: () async {
+                        final result = await logutDialog(context);
+                        if (result != null && result) {
+                          LoginController controller =
+                              Provider.of<LoginController>(context,
+                                  listen: false);
+                          controller.logOutUser(context);
+                          Appcache.removeValues(Appcache.loginDate);
+                          Appcache.removeValues(Appcache.userCredential);
+                          Appcache.removeValues(Appcache.savedVehicle);
+                          Appcache.usrRef = null;
+                          Appcache.selectedVehicle = null;
+                          Utils.disposeAllDisposableProviders(context);
+                          Navigator.pushNamedAndRemoveUntil(context,
+                              AppRoutes.loginScreenRoute, (route) => false);
+                        }
+                      },
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                        decoration: BoxDecoration(
+                            // color: Colors.red,
+                            // borderRadius: BorderRadius.circular(6),
+                            // border: Border.all(color: Colors.white, width: 2),
+                            ),
+                        child: Row(
+                          children: [
+                            // Text(
+                            //   "Logout",
+                            //   style: TextStyle(
+                            //       color: Colors.white,
+                            //       fontSize: 16,
+                            //       fontWeight: FontWeight.w800),
+                            // ),
+                            // SizedBox(
+                            //   width: 8,
+                            // ),
+                            Icon(Icons.exit_to_app)
+                          ],
                         ),
-                    child: Row(
+                      ),
+                    ),
+                  ]),
+                ),
+                body: Container(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  child: Container(
+                    width: MediaQuery.sizeOf(context).width,
+                    height: MediaQuery.sizeOf(context).height,
+                    // margin: EdgeInsets.only(bottom: 10),
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                    decoration: BoxDecoration(
+                      color: Utils.getColor(context).color3,
+                      border: Border.symmetric(vertical: BorderSide()),
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(24),
+                      ),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        // Text(
-                        //   "Logout",
-                        //   style: TextStyle(
-                        //       color: Colors.white,
-                        //       fontSize: 16,
-                        //       fontWeight: FontWeight.w800),
-                        // ),
-                        // SizedBox(
-                        //   width: 8,
-                        // ),
-                        Icon(Icons.exit_to_app)
+                        _ptiCheckList(
+                            context, vehicleModel, viewController, viewModel),
+                        _submitBtn(context),
                       ],
                     ),
                   ),
                 ),
-              ]),
-            ),
-            body: Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
               ),
-              child: Container(
-                width: MediaQuery.sizeOf(context).width,
-                height: MediaQuery.sizeOf(context).height,
-                // margin: EdgeInsets.only(bottom: 10),
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                decoration: BoxDecoration(
-                  color: Utils.getColor(context).color3,
-                  border: Border.symmetric(vertical: BorderSide()),
-                  borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(24),
-                  ),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    _ptiCheckList(
-                        context, vehicleModel, viewController, viewModel),
-                    _submitBtn(),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        );
-      },
-    );
+            );
+          },
+        ));
   }
 
   Widget _ptiCheckList(
@@ -324,9 +337,9 @@ class _PtiViewState extends State<PtiView> {
                     onTap: () => showSelectionVehicle(viewController, context),
                     child: Container(
                       padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                      // color: Colors.deepPurple.shade600.withOpacity(0.6),
+                      // color: Colors.red.shade600.withOpacity(0.6),
                       decoration: BoxDecoration(
-                          color: Colors.deepPurple.shade600.withOpacity(0.6),
+                          color: Colors.red.shade600.withOpacity(0.6),
                           borderRadius: BorderRadius.circular(12)),
                       child: Row(
                         children: [
@@ -367,7 +380,7 @@ class _PtiViewState extends State<PtiView> {
                   Container(
                     margin: EdgeInsets.only(bottom: 10),
                     decoration: BoxDecoration(
-                        color: Colors.deepPurple.shade50,
+                        color: Colors.red.shade50,
                         borderRadius: BorderRadius.circular(24)),
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -434,7 +447,7 @@ class _PtiViewState extends State<PtiView> {
                         bottom: 10 + MediaQuery.viewInsetsOf(context).bottom),
                     padding: const EdgeInsets.only(left: 16, right: 16),
                     decoration: BoxDecoration(
-                        color: Colors.deepPurple.shade50,
+                        color: Colors.red.shade50,
                         borderRadius: BorderRadius.circular(24)),
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -480,7 +493,7 @@ class _PtiViewState extends State<PtiView> {
                         bottom: 10 + MediaQuery.viewInsetsOf(context).bottom),
                     padding: const EdgeInsets.only(left: 16, right: 16),
                     decoration: BoxDecoration(
-                        color: Colors.deepPurple.shade50,
+                        color: Colors.red.shade50,
                         borderRadius: BorderRadius.circular(24)),
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -503,61 +516,7 @@ class _PtiViewState extends State<PtiView> {
                           ),
                           SizedBox(
                             width: MediaQuery.sizeOf(context).width,
-                            child: TextFormField(
-                              onTap: () async {
-                                await showModalBottomSheet(
-                                    context: context,
-                                    builder: (context) {
-                                      return CupertinoActionSheet(
-                                        actions: <CupertinoActionSheetAction>[
-                                          CupertinoActionSheetAction(
-                                            child: Text(
-                                              "Camera",
-                                              // style: AppFont.helvBold(16,
-                                              //     color: AppColors.appBlack()),
-                                            ),
-                                            onPressed: () async {
-                                              // Navigator.pop(context);
-
-                                              await viewController.getImage(
-                                                context,
-                                                ImageSource.camera,
-                                              );
-                                            },
-                                          ),
-                                          CupertinoActionSheetAction(
-                                            child: Text("Gallery"
-                                                // Utils.getTranslated(
-                                                //     context, "report_gallery"),
-                                                // style: AppFont.helvBold(16,
-                                                //     color: AppColors.appBlack()),
-                                                ),
-                                            onPressed: () async {
-                                              await viewController.getImage(
-                                                context,
-                                                ImageSource.gallery,
-                                              );
-                                            },
-                                          ),
-                                        ],
-                                      );
-                                    });
-                              },
-                              controller:
-                                  TextEditingController(text: "Tap to upload"),
-                              maxLines: null,
-                              readOnly: true,
-                              decoration: InputDecoration(
-                                  suffixIcon: Icon(
-                                    Icons.upload,
-                                    size: 20,
-                                    //color: AppColor.wordingColorBlack),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(12)),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(12))),
-                            ),
+                            child: UpdateImageWidget(),
                           ),
                           SizedBox(
                             height: 24,
@@ -669,25 +628,31 @@ class _PtiViewState extends State<PtiView> {
     );
   }
 
-  Consumer<PtiModel> _submitBtn() {
+  Consumer<PtiModel> _submitBtn(context) {
     PtiController controller = PtiController();
     return Consumer<PtiModel>(
         builder: (context, value, child) => value.checklistData.isNotEmpty
             ? InkWell(
-                onTap: () {
+                onTap: () async {
                   // Navigator.pushReplacementNamed(
                   //     context, AppRoutes.homeScreenRoute);
 
                   ///TODO : remove after confirmation
                   if (!value.checklistData.any((e) => e.subcategories
                       .any((g) => g.status == PTISliderStatus.none))) {
-                    controller.savePTICheckList(context).then((v) {
-                      value.ptiCheckStatus = v;
-                      if (v) {
-                        Navigator.pushReplacementNamed(
-                            context, AppRoutes.homeScreenRoute);
-                      }
-                    });
+                    final bool result = await Provider.of<ImageController>(
+                            context,
+                            listen: false)
+                        .updateImage(context, null, true);
+                    if (result) {
+                      controller.savePTICheckList(context).then((v) {
+                        value.ptiCheckStatus = v;
+                        if (v) {
+                          Navigator.pushReplacementNamed(
+                              context, AppRoutes.homeScreenRoute);
+                        }
+                      });
+                    }
                   }
                   // if (value.checklistData.any((element) =>
                   //     (element.subcategories.any((element) =>
@@ -715,13 +680,13 @@ class _PtiViewState extends State<PtiView> {
                       color: value.checklistData.any((e) => e.subcategories
                               .any((g) => g.status == PTISliderStatus.none))
                           ? Colors.grey.shade600
-                          : Colors.green,
+                          : Colors.red,
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(
                           color: value.checklistData.any((e) => e.subcategories
                                   .any((g) => g.status == PTISliderStatus.none))
                               ? Colors.grey.shade600
-                              : Colors.green,
+                              : Colors.red,
                           width: 2)),
                   child: Text(
                     "Submit",

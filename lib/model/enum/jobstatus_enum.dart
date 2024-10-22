@@ -18,7 +18,7 @@ extension CatExtension on JobStatus {
       Colors.blue.shade600,
       Colors.blue.shade600,
       Colors.green.shade600,
-      Colors.yellow.shade700,
+      Colors.yellow.shade800,
       Colors.grey.shade100,
     ][index];
   }

@@ -1,17 +1,21 @@
 import 'package:acegases_hms/Utils/contants.dart';
 import 'package:acegases_hms/appcache.dart/appcache.dart';
 import 'package:acegases_hms/controller/auth/login_controller.dart';
+import 'package:acegases_hms/controller/update/remote_config.dart';
 import 'package:acegases_hms/routes/app_routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-class LoginView extends StatelessWidget {
+class LoginView extends StatelessWidget with AppRemoteConfig {
   const LoginView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      checkConfig(context);
+    });
     double screenWidth = MediaQuery.sizeOf(context).width;
     double screenHeight = MediaQuery.sizeOf(context).height;
     return Scaffold(
@@ -26,15 +30,22 @@ class LoginView extends StatelessWidget {
           decoration: BoxDecoration(
             gradient: LinearGradient(
                 colors: [
-                  Colors.deepPurple.shade700,
-                  Colors.deepPurple.shade500,
-                  Colors.deepPurple.shade400,
-                  Colors.deepPurple.shade200,
-                  Colors.deepPurple.shade100
+                  Colors.red.shade500,
+                  Colors.red.shade300,
+                  Colors.red.shade200,
+                  Colors.red.shade100,
+                  Colors.red.shade50,
+
+                  ////TODO: DARK THEME GRADIENT
+                  // Color.fromARGB(255, 161, 6, 6),
+                  // Color.fromARGB(255, 121, 11, 11),
+                  // Color.fromARGB(255, 104, 16, 16),
+                  // Color.fromARGB(255, 89, 41, 41),
+                  // Color.fromARGB(255, 79, 77, 77),
                 ],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                stops: const [0.05, 0.2, 0.3, 0.4, 0.5]),
+                begin: Alignment.bottomCenter,
+                end: Alignment.topCenter,
+                stops: const [0.08, 0.15, 0.2, 0.3, 0.7]),
           ),
           width: screenWidth,
           height: screenHeight,
@@ -47,10 +58,12 @@ class LoginView extends StatelessWidget {
               ),
               Container(
                 // margin: EdgeInsets.only(bottom: 50),
+                // decoration: BoxDecoration(color: Colors.white30),
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 18.0, vertical: 4),
+                    const EdgeInsets.symmetric(horizontal: 30.0, vertical: 4),
                 child: Image.asset(
-                  Constants.assetImages + 'appicon/ac.png',
+                  Constants.assetImages + 'Ace-New-Logo-2023.png',
+                  fit: BoxFit.contain,
                 ),
               ),
               const Spacer(
@@ -62,7 +75,7 @@ class LoginView extends StatelessWidget {
 
                 // decoration: BoxDecoration(
                 //     gradient: LinearGradient(
-                //         colors: [Colors.deepPurple.shade200, Colors.red.shade100],
+                //         colors: [Colors.red.shade200, Colors.red.shade100],
                 //         begin: Alignment.topLeft,
                 //         end: Alignment.bottomRight),
                 //     color: Colors.white,
@@ -75,8 +88,8 @@ class LoginView extends StatelessWidget {
                     const Text(
                       "Welcome Back,",
                       style: TextStyle(
-                          fontSize: 24,
-                          color: Colors.white,
+                          fontSize: 22,
+                          color: Colors.black,
                           fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(
@@ -105,7 +118,7 @@ class LoginView extends StatelessWidget {
                                   loginController.validatePhone(value),
                               decoration: InputDecoration(
                                   hintText: "Phone No",
-                                  hintStyle: TextStyle(color: Colors.white38),
+                                  hintStyle: TextStyle(color: Colors.white70),
                                   border: InputBorder.none,
                                   focusedBorder: InputBorder.none,
                                   enabledBorder: InputBorder.none,
@@ -154,7 +167,7 @@ class LoginView extends StatelessWidget {
                               obscureText: true,
                               decoration: InputDecoration(
                                   hintText: "Password ",
-                                  hintStyle: TextStyle(color: Colors.white38),
+                                  hintStyle: TextStyle(color: Colors.white70),
                                   border: InputBorder.none,
                                   focusedBorder: InputBorder.none,
                                   enabledBorder: InputBorder.none,
@@ -217,10 +230,19 @@ class LoginView extends StatelessWidget {
                               }
                             });
                           },
+                          style: ElevatedButton.styleFrom(
+                              // surfaceTintColor: Colors.transparent,
+                              // shadowColor: Colors.transparent,
+                              backgroundColor: Colors.red,
+                              // foregroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8))),
                           child: const Text(
                             "LOG IN",
                             style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
                       ],
@@ -237,16 +259,20 @@ class LoginView extends StatelessWidget {
                   children: [
                     Text(
                       "${Appcache.packageInfo.version} (${Appcache.packageInfo.buildNumber})",
-                      style:
-                          TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                          color: Colors.red.shade50,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
+                        Text(
                           "Powered By",
                           style: TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.w600),
+                              color: Colors.red.shade50,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600),
                         ),
                         Image.asset(
                           Constants.assetImages + "android12Splash.png",
@@ -254,10 +280,12 @@ class LoginView extends StatelessWidget {
                           height: 30,
                           fit: BoxFit.cover,
                         ),
-                        const Text(
+                        Text(
                           "Gussmann Integrated Solution",
                           style: TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.w600),
+                              color: Colors.red.shade50,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600),
                         ),
                       ],
                     ),

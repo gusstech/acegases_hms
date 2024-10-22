@@ -88,7 +88,7 @@ class LoginController extends DisposableProvider {
                   type: CustomAlertType.alert,
                   description: displayText,
                   isLogout: false,
-                  popButtonText: "OK",
+                  popButtonText: "OKAY",
                 ),
               ).then((v) {
                 return true;
@@ -106,7 +106,7 @@ class LoginController extends DisposableProvider {
                   type: CustomAlertType.error,
                   description: value.gdlError ?? "Something went wrong",
                   isLogout: false,
-                  popButtonText: "OK",
+                  popButtonText: "OKAY",
                 ),
               );
             }
@@ -119,7 +119,7 @@ class LoginController extends DisposableProvider {
                   type: CustomAlertType.error,
                   description: value.licenceError ?? "Something went wrong",
                   isLogout: false,
-                  popButtonText: "OK",
+                  popButtonText: "OKAY",
                 ),
               );
             }
@@ -132,7 +132,7 @@ class LoginController extends DisposableProvider {
                   type: CustomAlertType.error,
                   description: value.passPortError ?? "Something went wrong",
                   isLogout: false,
-                  popButtonText: "OK",
+                  popButtonText: "OKAY",
                 ),
               );
             }
@@ -144,7 +144,7 @@ class LoginController extends DisposableProvider {
                 type: CustomAlertType.error,
                 description: value.error ?? "Something went wrong",
                 isLogout: false,
-                popButtonText: "OK",
+                popButtonText: "OKAY",
               ),
             );
           }
@@ -158,7 +158,7 @@ class LoginController extends DisposableProvider {
               type: CustomAlertType.error,
               description: value.error ?? "Something went wrong",
               isLogout: false,
-              popButtonText: "OK",
+              popButtonText: "OKAY",
             ),
           );
         }

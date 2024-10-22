@@ -17,9 +17,9 @@ extension CatExtension on CustomAlertType {
 
   Color get dialogColor {
     return [
-      Colors.lightGreen.shade500,
-      Colors.yellow.shade700,
-      Colors.red.shade600
+      Colors.red.shade600,
+      Colors.red.shade600,
+      Colors.red.shade600,
     ][index];
   }
 
@@ -69,74 +69,75 @@ class CustomAlertDialog extends StatelessWidget {
                   Text(
                     type.dialogTitle,
                     style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 18,
                       color:
                           Theme.of(context).extension<ExtendColors>()!.color2,
                     ),
                   ),
                   const SizedBox(
-                    height: 16,
+                    height: 8,
                   ),
                   Text(
                     description,
                     style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
                       color:
                           Theme.of(context).extension<ExtendColors>()!.color2,
                     ),
                   ),
                   const SizedBox(
-                    height: 16,
+                    height: 20,
                   ),
                   Align(
                     alignment: Alignment.bottomRight,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        InkWell(
-                          onTap: () =>
-                              Navigator.pop(context, isLogout ?? false),
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 8, vertical: 4),
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                  width: 3,
-                                  color: isLogout == true
-                                      ? Colors.red.shade500
-                                      : type.dialogColor,
-                                ),
-                                borderRadius: BorderRadius.circular(8)),
-                            child: Text(
-                              popButtonText ?? "Logout",
-                              style: TextStyle(
-                                  color: isLogout == true
-                                      ? Colors.red.shade500
-                                      : type.dialogColor,
-                                  fontWeight: FontWeight.w800),
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: cancelBtn == true ? 12 : 0),
                         cancelBtn ?? false
                             ? InkWell(
                                 onTap: () => Navigator.pop(context, false),
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 8, vertical: 4),
+                                      horizontal: 12, vertical: 6),
                                   decoration: BoxDecoration(
-                                      border: Border.all(
-                                        width: 3,
-                                        color: Colors.blue,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8)),
+                                      color: Colors.black,
+                                      // border: Border.all(
+                                      //   width: 3,
+                                      //   color: Colors.b,
+                                      // ),
+                                      borderRadius: BorderRadius.circular(6)),
                                   child: Text(
-                                    "Cancel",
+                                    "CANCEL",
                                     style: TextStyle(
-                                        color: Colors.blue,
+                                        color: Colors.white,
                                         fontWeight: FontWeight.w800),
                                   ),
                                 ),
                               )
                             : const SizedBox(),
+                        SizedBox(width: cancelBtn == true ? 12 : 0),
+                        InkWell(
+                          onTap: function != null
+                              ? function
+                              : () => Navigator.pop(context, isLogout ?? false),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 6),
+                            decoration: BoxDecoration(
+                                color: isLogout == true
+                                    ? Colors.red.shade500
+                                    : Colors.black,
+                                borderRadius: BorderRadius.circular(6)),
+                            child: Text(
+                              popButtonText ?? "LOG OUT",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w800),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   )

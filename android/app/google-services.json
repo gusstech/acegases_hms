@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "26012899022",
+    "project_id": "ace-gases",
+    "storage_bucket": "ace-gases.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:26012899022:android:c1bf650bd860b3dc83e29f",
+        "android_client_info": {
+          "package_name": "com.gis.acegaseshms"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB221jryfL17tl7w_1si3yvquZMJhNp14A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -111,22 +111,22 @@ class TripController extends DisposableProvider {
   Future startDriving(BuildContext context, TripDataDTO? data) async {
     TripApi dioApi = TripApi(context);
     // Appcache.tripList.clear();
-    if (Appcache.tripList.isEmpty ||
-        !Appcache.tripList
-            .any((e) => e.drivingStatus == "0" || e.drivingStatus == "2")) {
-      return showDialog(
-        context: context,
-        // barrierColor: Colors.transparent,
-        barrierDismissible: true,
-        builder: (context) => CustomAlertDialog(
-          type: CustomAlertType.error,
-          description: Appcache.tripList.isEmpty
-              ? "No trip to start driving"
-              : "All trip is in driving mode",
-          popButtonText: "OK",
-        ),
-      );
-    }
+    // if (Appcache.tripList.isEmpty ||
+    //     !Appcache.tripList
+    //         .any((e) => e.drivingStatus == "0" || e.drivingStatus == "2")) {
+    //   return showDialog(
+    //     context: context,
+    //     // barrierColor: Colors.transparent,
+    //     barrierDismissible: true,
+    //     builder: (context) => CustomAlertDialog(
+    //       type: CustomAlertType.error,
+    //       description: Appcache.tripList.isEmpty
+    //           ? "No trip to start driving"
+    //           : "All trip is in driving mode",
+    //       popButtonText: "OKAY",
+    //     ),
+    //   );
+    // }
     EasyLoading.show(maskType: EasyLoadingMaskType.black);
     var result = await dioApi
         .startDriving(
@@ -150,7 +150,7 @@ class TripController extends DisposableProvider {
         builder: (context) => CustomAlertDialog(
           type: CustomAlertType.success,
           description: result.error ?? "Succesfully update driving status",
-          popButtonText: "OK",
+          popButtonText: "OKAY",
         ),
       );
     } else {
@@ -161,7 +161,7 @@ class TripController extends DisposableProvider {
         builder: (context) => CustomAlertDialog(
           type: CustomAlertType.error,
           description: result.error ?? "Something went wrong!!",
-          popButtonText: "OK",
+          popButtonText: "OKAY",
         ),
       );
     }
@@ -192,7 +192,7 @@ class TripController extends DisposableProvider {
         builder: (context) => CustomAlertDialog(
           type: CustomAlertType.success,
           description: result.error ?? "Succesfully update driving status",
-          popButtonText: "OK",
+          popButtonText: "OKAY",
         ),
       );
     } else {
@@ -203,7 +203,7 @@ class TripController extends DisposableProvider {
         builder: (context) => CustomAlertDialog(
           type: CustomAlertType.error,
           description: result.error ?? "Something went wrong!!",
-          popButtonText: "OK",
+          popButtonText: "OKAY",
         ),
       );
     }
@@ -248,7 +248,7 @@ class TripController extends DisposableProvider {
             type: CustomAlertType.error,
             description:
                 resultList.firstOrNull?.error ?? "Something went wrong!!",
-            popButtonText: "OK",
+            popButtonText: "OKAY",
           ),
         );
       } else {
@@ -271,7 +271,7 @@ class TripController extends DisposableProvider {
         builder: (context) => CustomAlertDialog(
           type: CustomAlertType.alert,
           description: "Please select a job to proceed",
-          popButtonText: "OK",
+          popButtonText: "OKAY",
         ),
       );
     }
@@ -312,7 +312,7 @@ class TripController extends DisposableProvider {
             type: CustomAlertType.error,
             description:
                 resultList.firstOrNull?.error ?? "Something went wrong!!",
-            popButtonText: "OK",
+            popButtonText: "OKAY",
           ),
         );
       } else {
@@ -324,7 +324,7 @@ class TripController extends DisposableProvider {
             type: CustomAlertType.success,
             description: resultList.firstOrNull?.error ??
                 "Succesfully update trip status",
-            popButtonText: "OK",
+            popButtonText: "OKAY",
           ),
         );
       }
@@ -336,7 +336,7 @@ class TripController extends DisposableProvider {
         builder: (context) => CustomAlertDialog(
           type: CustomAlertType.alert,
           description: "Please select a job to proceed",
-          popButtonText: "OK",
+          popButtonText: "OKAY",
         ),
       );
     }
@@ -362,7 +362,7 @@ class TripController extends DisposableProvider {
               ? CustomAlertType.success
               : CustomAlertType.error,
           description: detail.error ?? "Something went wrong!!",
-          popButtonText: "OK",
+          popButtonText: "OKAY",
         ),
       );
       // return detail;

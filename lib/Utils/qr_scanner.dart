@@ -24,7 +24,7 @@ class _BarcodeScannerWithOverlayState extends State<BarcodeScannerWithOverlay> {
       backgroundColor: Colors.black,
       appBar: AppBar(
         foregroundColor: Colors.white,
-        backgroundColor: Colors.deepPurple.shade500,
+        backgroundColor: Colors.red.shade500,
         // title: const Text('Scanner with Overlay Example app'),
       ),
       body: Stack(

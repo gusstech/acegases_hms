@@ -15,9 +15,10 @@ class Appcache {
   static List<TripDataDTO> tripList = [];
 
   static String loginDate = "loginDate";
+  static String loginTime = "loginTime";
   static String userCredential = "userCredential";
   static String savedVehicle = "savedVehicle";
-
+  static String liveVersion = "";
   static PackageInfo packageInfo = PackageInfo(
     appName: 'Unknown',
     packageName: 'Unknown',
@@ -26,6 +27,8 @@ class Appcache {
     buildSignature: 'Unknown',
     installerStore: 'Unknown',
   );
+
+  static bool gotUpdate = false;
 
   static Future<void> setString(String key, String value) async {
     SharedPreferences pref = await SharedPreferences.getInstance();

@@ -47,17 +47,18 @@ class _JobDetailViewState extends State<JobDetailView> {
             top: MediaQuery.paddingOf(context).top,
           ),
           decoration: BoxDecoration(
+            color: Colors.red.shade600,
             gradient: LinearGradient(
                 colors: [
-                  Colors.deepPurple.shade700,
-                  Colors.deepPurple.shade500,
-                  Colors.deepPurple.shade400,
-                  Colors.deepPurple.shade200,
-                  Colors.deepPurple.shade100
+                  Colors.red.shade600,
+                  Colors.red.shade400,
+                  Colors.red.shade300,
+                  Colors.red.shade200,
+                  Colors.red.shade100
                 ],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                stops: const [0.05, 0.1, 0.15, 0.2, 0.3]),
+                stops: const [0.05, 0.1, 0.3, 0.5, 0.7]),
           ),
           width: screenWidth,
           height: screenHeight,
@@ -403,13 +404,14 @@ class _JobDetailViewState extends State<JobDetailView> {
           ],
         ),
         trailing: Container(
-          padding: EdgeInsets.all(5),
+          padding: EdgeInsets.all(6),
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(6), color: status.tripColor),
+              borderRadius: BorderRadius.circular(3), color: status.tripColor),
           child: Text(
             status.tripDisplayText,
             style: TextStyle(
                 fontWeight: FontWeight.w700,
+                fontSize: 10,
                 color: Colors.white70,
                 shadows: [
                   Shadow(
@@ -480,7 +482,7 @@ class _JobDetailViewState extends State<JobDetailView> {
               //                     offset: Offset(2, 2),
               //                   )
               //                 ],
-              //                 color: Colors.deepPurple.shade500,
+              //                 color: Colors.red.shade500,
               //                 borderRadius: BorderRadius.circular(6)),
               //             child: const Row(
               //               children: [
@@ -631,7 +633,7 @@ class _JobDetailViewState extends State<JobDetailView> {
                 //                 padding: const EdgeInsets.symmetric(
                 //                     horizontal: 8, vertical: 6),
                 //                 decoration: BoxDecoration(
-                //                     color: Colors.deepPurple.shade500,
+                //                     color: Colors.red.shade500,
                 //                     boxShadow: [
                 //                       BoxShadow(
                 //                         color: Colors.black26,
@@ -726,7 +728,7 @@ class _JobDetailViewState extends State<JobDetailView> {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 8, vertical: 6),
                                   decoration: BoxDecoration(
-                                      color: Colors.deepPurple.shade500,
+                                      color: Colors.red.shade500,
                                       boxShadow: [
                                         BoxShadow(
                                           color: Colors.black26,
@@ -905,14 +907,15 @@ class _JobDetailViewState extends State<JobDetailView> {
                   },
                   child: Container(
                     margin: EdgeInsets.only(right: 8, top: 4),
-                    padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                    padding: EdgeInsets.symmetric(vertical: 4, horizontal: 12),
                     decoration: BoxDecoration(
-                        color: Colors.deepPurple.shade500,
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(
-                            color: Colors.deepPurple.shade500, width: 2)),
+                      color: Colors.red.shade500,
+                      borderRadius: BorderRadius.circular(5),
+                      // border:
+                      //     Border.all(color: Colors.red.shade500, width: 2),
+                    ),
                     child: Text(
-                      "Update",
+                      "UPDATE",
                       style: TextStyle(
                           color: Colors.white,
                           // shadows: [

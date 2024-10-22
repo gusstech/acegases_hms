@@ -17,9 +17,9 @@ class ThemeModel {
   }
 
   // Define the base color
-  static const Color darkPurple = Color.fromARGB(255, 126, 87, 194);
+  static const Color darkPurple = Color.fromARGB(255, 218, 55, 50);
 
-  static const Color darkPurpleOld = Color.fromARGB(255, 5, 11, 79);
+  static const Color darkPurpleOld = Color.fromARGB(255, 218, 55, 50);
   // Define light theme
   static final lightTheme = ThemeData(
     extensions: const <ThemeExtension>[ExtendColors.light],

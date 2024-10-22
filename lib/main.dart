@@ -5,11 +5,17 @@ import 'package:acegases_hms/model/app_theme/app_theme_model.dart';
 import 'package:acegases_hms/model/driver_vehicle/driver_vehicle_model.dart';
 import 'package:acegases_hms/model/pti/pti_model.dart';
 import 'package:acegases_hms/routes/app_routes.dart';
+import 'package:acegases_hms/services/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider<DriverVehicleController>(
       create: (context) => DriverVehicleController(),
@@ -39,8 +45,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'AceGases',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
         useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
@@ -86,6 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
       return MaterialApp(
         title: 'AceGases HMS',
         theme: controller.getTheme(),
+        debugShowCheckedModeBanner: false,
         onGenerateRoute: AppRoutes.generatedRoute,
         initialRoute: AppRoutes.splashScreenRoute,
         navigatorKey: navigatorKey,

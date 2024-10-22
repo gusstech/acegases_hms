@@ -29,11 +29,9 @@
 		<key>UIMainStoryboardFile</key>
 		<string>Main</string>
 		<key>NSCameraUsageDescription</key>
-    		<string>Your app needs access to the camera to take photos and videos.</string>
+    		<string>Use for capture image for job/pdc image and qr scan</string>
 	    	<key>NSPhotoLibraryUsageDescription</key>
-    		<string>Your app needs access to the photo library to select photos and videos.</string>
-		<key>NSMicrophoneUsageDescription</key>
-		<string>Need to upload image</string>
+    		<string>The app collect need of photo to provide more information about the job</string>
 		<key>UISupportedInterfaceOrientations</key>
 		<array>
 			<string>UIInterfaceOrientationPortrait</string>
