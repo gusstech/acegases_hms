@@ -28,13 +28,14 @@ platform :android do
 
   lane :deploy do
   supply(
+    version_code: "12",
     json_key: "fastlane/persuasive-net-417001-add98881eb51.json",
     package_name: "com.gis.acegaseshms", # Replace with your app's package name
     aab: "build/app/outputs/bundle/release/app-release.aab", # or apk: "path/to/your/app.apk"
     track: "production" # or "alpha", "beta", etc.
   )
   end
-  
+
   desc "Deploy a new version to the Google Play"
   lane :deploy do
     gradle(task: "clean assembleRelease")
