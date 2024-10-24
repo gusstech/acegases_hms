@@ -27,13 +27,16 @@ platform :android do
   end
 
   lane :deploy do
-  supply(
-    version_code: "12",
-    json_key: "fastlane/persuasive-net-417001-add98881eb51.json",
-    package_name: "com.gis.acegaseshms", # Replace with your app's package name
-    aab: "build/app/outputs/bundle/release/app-release.aab", # or apk: "path/to/your/app.apk"
-    track: "production" # or "alpha", "beta", etc.
-  )
+    version_code = get_version_code
+    supply(
+      version_code: version_code,
+      metadata_path: './metadata/android',
+      changelog: "Changelog for version #{version_code}" 
+      json_key: "fastlane/persuasive-net-417001-add98881eb51.json",
+      package_name: "com.gis.acegaseshms", # Replace with your app's package name
+      aab: "build/app/outputs/bundle/release/app-release.aab", # or apk: "path/to/your/app.apk"
+      track: "production" # or "alpha", "beta", etc.
+    )
   end
 
   desc "Deploy a new version to the Google Play"
@@ -41,4 +44,11 @@ platform :android do
     gradle(task: "clean assembleRelease")
     upload_to_play_store
   end
+end
+
+def get_version_code
+  # This example assumes you're reading from build.gradle
+  gradle_file = File.read('./android/app/build.gradle')
+  match = gradle_file.match(/versionCode\s+(\d+)/)
+  match[1] if match
 end
