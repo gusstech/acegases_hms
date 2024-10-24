@@ -1,0 +1,2 @@
+json_key_file("android/fastlane/persuasive-net-417001-add98881eb51.json") # Path to the json secret file - Follow https://docs.fastlane.tools/actions/supply/#setup to get one
+package_name("com.gis.acegaseshms") # e.g. com.krausefx.app
