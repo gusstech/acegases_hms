@@ -29,7 +29,13 @@ platform :android do
   lane :deploy do
     version_code = get_version_code
     supply(
-      # version_code: version_code,
+      version_code:12,
+      version_name:'1.0.7',
+      # skip_upload_metadata: true,
+      # skip_upload_images: true,
+      skip_upload_changelogs: true,
+      # skip_upload_apk: true,
+      # skip_upload_screenshots: true,
       metadata_path: './metadata/android',
       # changelog: "Changelog for version #{version_code}" 
       json_key: "fastlane/persuasive-net-417001-add98881eb51.json",
@@ -42,16 +48,7 @@ platform :android do
   desc "Deploy a new version to the Google Play"
   lane :deploy do
     gradle(task: "clean assembleRelease")
-    upload_to_play_store(
-      aab: "../build/app/outputs/bundle/productionRelease/app-production-release.aab",
-      version_code:12,
-      version_name:'1.0.7',
-      # skip_upload_metadata: true,
-      # skip_upload_images: true,
-      skip_upload_changelogs: true,
-      # skip_upload_apk: true,
-      # skip_upload_screenshots: true,
-    )
+    upload_to_play_store
   end
 end
 
