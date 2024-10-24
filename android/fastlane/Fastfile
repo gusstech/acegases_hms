@@ -26,6 +26,15 @@ platform :android do
     # You can also use other beta testing services here
   end
 
+  lane :deploy do
+  supply(
+    json_key: "fastlane/persuasive-net-417001-add98881eb51.json",
+    package_name: "com.gis.acegaseshms", # Replace with your app's package name
+    aab: "build/app/outputs/bundle/release/app-release.aab", # or apk: "path/to/your/app.apk"
+    track: "production" # or "alpha", "beta", etc.
+  )
+  end
+  
   desc "Deploy a new version to the Google Play"
   lane :deploy do
     gradle(task: "clean assembleRelease")
