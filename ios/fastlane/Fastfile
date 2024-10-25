@@ -1,0 +1,91 @@
+# # This file contains the fastlane.tools configuration
+# # You can find the documentation at https://docs.fastlane.tools
+# #
+# # For a list of all available actions, check out
+# #
+# #     https://docs.fastlane.tools/actions
+# #
+# # For a list of all available plugins, check out
+# #
+# #     https://docs.fastlane.tools/plugins/available-plugins
+# #
+
+# # Uncomment the line if you want fastlane to automatically update itself
+# # update_fastlane
+
+# default_platform(:ios)
+
+# platform :ios do
+#   desc "Push a new release build to the App Store"
+#     # lane :beta do
+#     #   get_certificates           # invokes cert
+#     #   get_provisioning_profile
+#     #   build_app(scheme: "Runner",
+#     #             workspace: "Runner.xcworkspace",
+#     #             include_bitcode: true)
+#     # end
+#   # lane :release do
+#   #   # increment_build_number(xcodeproj: "Runner.xcodeproj")
+#   #   # gym(
+#   #   #   project:"Runner.xcodeproj",
+#   #   #   scheme: "Runner",
+#   #   #   clean: true,
+#   #   #   export_xcargs:"-allowProvisioningUpdates",
+#   #   #   output_name:"ReleaseApp.ipa",
+#   #   # )
+#   #   # build_app(
+#   #   #   skip_build_archive: true,
+#   #   #   # archive_path: "../build/ios/archive/Runner.xcarchive",
+#   #   # )
+#   #   # upload_to_app_store(skip_metadata: true, skip_screenshots: true)
+#   #   # capture_screenshots                  # generate new screenshots for the App Store
+#   #   sync_code_signing(type: "appstore")  # see code signing guide for more information
+#   #   build_app(scheme: "Runner")
+#   #   upload_to_app_store                  # upload your app to App Store Connect
+#   #   slack(message: "Successfully uploaded a new App Store build")
+#   # end
+#   lane :delivery do 
+#         # disable auto signing
+#         automatic_code_signing(path: "Running.xcodeproj")
+
+#         # build for app store / testflight
+#         gym(scheme: "Runner",
+#             workspace: "Runner.xcworkspace",
+#             export_method: "app-store")
+
+#         upload_to_testflight
+#   end 
+# end
+
+default_platform(:ios)
+
+platform :ios do 
+
+  lane :deploy do
+    get_certificates           # invokes cert
+    get_provisioning_profile
+    build_app(
+      workspace: "Runner.xcworkspace",
+      scheme: "Runner",
+      export_method: "app-store",
+      verbose: true # Enables detailed logs
+    )
+    # upload_to_app_store(
+    #   username: "andrewyap@g1.com.my", # Your Apple ID
+    #   app_specific_password: "roii-nqih-kuvu-ftug", # Use the app-specific password here
+    #   skip_screenshots: true,
+    #   skip_metadata: true
+    # )
+    # deliver(
+    #   # build_number: '830',
+    #   ipa: "Runner.ipa",
+    #   submit_for_review: true,
+    #   automatic_release: true,
+    #   force: true, # Skip HTMl report verification
+    #   skip_metadata: true,
+    #   skip_screenshots: true,
+    #   # skip_binary_upload: true
+    # )
+  end
+
+end

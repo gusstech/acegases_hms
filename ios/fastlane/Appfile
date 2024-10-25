@@ -1,0 +1,8 @@
+app_identifier("com.gis.acegaseshms") # The bundle identifier of your app
+apple_id("andrewyap@g1.com.my") # Your Apple Developer Portal username
+
+itc_team_id("119317884") # App Store Connect Team ID
+team_id("5YW2PCC2YT") # Developer Portal Team ID
+ENV["FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD"] = "roii-nqih-kuvu-ftug"
+# For more information about the Appfile, see:
+#     https://docs.fastlane.tools/advanced/#appfile
