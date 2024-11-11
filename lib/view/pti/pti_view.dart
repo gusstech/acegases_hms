@@ -17,6 +17,7 @@ import 'package:acegases_hms/view/pti/pti_toggle_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
@@ -274,7 +275,8 @@ class _PtiViewState extends State<PtiView> with AppRemoteConfig {
                       children: [
                         _ptiCheckList(
                             context, vehicleModel, viewController, viewModel),
-                        _submitBtn(context),
+                        _submitBtn(
+                            context, vehicleModel, viewController, viewModel),
                       ],
                     ),
                   ),
@@ -628,75 +630,81 @@ class _PtiViewState extends State<PtiView> with AppRemoteConfig {
     );
   }
 
-  Consumer<PtiModel> _submitBtn(context) {
-    PtiController controller = PtiController();
-    return Consumer<PtiModel>(
-        builder: (context, value, child) => value.checklistData.isNotEmpty
-            ? InkWell(
-                onTap: () async {
-                  // Navigator.pushReplacementNamed(
-                  //     context, AppRoutes.homeScreenRoute);
+  Widget _submitBtn(
+    context,
+    DriverVehicleController vehicleModel,
+    PtiController controller,
+    PtiModel value,
+  ) {
+    return value.checklistData.isNotEmpty
+        ? InkWell(
+            onTap: () async {
+              // Navigator.pushReplacementNamed(
+              //     context, AppRoutes.homeScreenRoute);
+              print(controller.ptiRemark.text);
 
-                  ///TODO : remove after confirmation
-                  if (!value.checklistData.any((e) => e.subcategories
-                      .any((g) => g.status == PTISliderStatus.none))) {
-                    final bool result = await Provider.of<ImageController>(
-                            context,
-                            listen: false)
-                        .updateImage(context, null, true);
-                    if (result) {
-                      controller.savePTICheckList(context).then((v) {
-                        value.ptiCheckStatus = v;
-                        if (v) {
-                          Navigator.pushReplacementNamed(
-                              context, AppRoutes.homeScreenRoute);
-                        }
-                      });
-                    }
-                  }
-                  // if (value.checklistData.any((element) =>
-                  //     (element.subcategories.any((element) =>
-                  //         element.status ==
-                  //         PTISliderStatus.none)))) {
-                  //   // value.ptiCheckStatus = true;
-                  //   print("object");
-                  //   return;
-                  // } else {
+              ///TODO : remove after confirmation
+              // if (!value.checklistData.any((e) => e.subcategories
+              //     .any((g) => g.status == PTISliderStatus.none))) {
+              //   EasyLoading.show(maskType: EasyLoadingMaskType.black);
+              //   final bool result = await Provider.of<ImageController>(
+              //           context,
+              //           listen: false)
+              //       .updateImage(context, null, true);
+              //   EasyLoading.dismiss();
+              //   if (result) {
+              //     controller.savePTICheckList(context).then((v) {
+              //       value.ptiCheckStatus = v;
+              //       if (v) {
+              //         Navigator.pushReplacementNamed(
+              //             context, AppRoutes.homeScreenRoute);
+              //       }
+              //     });
+              //   }
+              // }
+              // if (value.checklistData.any((element) =>
+              //     (element.subcategories.any((element) =>
+              //         element.status ==
+              //         PTISliderStatus.none)))) {
+              //   // value.ptiCheckStatus = true;
+              //   print("object");
+              //   return;
+              // } else {
 
-                  // }
-                },
-                child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-                  width: MediaQuery.sizeOf(context).width - 38,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.black54,
-                            offset: Offset(2, 2),
-                            spreadRadius: 1,
-                            blurRadius: 3)
-                      ],
+              // }
+            },
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+              width: MediaQuery.sizeOf(context).width - 38,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.black54,
+                        offset: Offset(2, 2),
+                        spreadRadius: 1,
+                        blurRadius: 3)
+                  ],
+                  color: value.checklistData.any((e) => e.subcategories
+                          .any((g) => g.status == PTISliderStatus.none))
+                      ? Colors.grey.shade600
+                      : Colors.red,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
                       color: value.checklistData.any((e) => e.subcategories
                               .any((g) => g.status == PTISliderStatus.none))
                           ? Colors.grey.shade600
                           : Colors.red,
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                          color: value.checklistData.any((e) => e.subcategories
-                                  .any((g) => g.status == PTISliderStatus.none))
-                              ? Colors.grey.shade600
-                              : Colors.red,
-                          width: 2)),
-                  child: Text(
-                    "Submit",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w800),
-                  ),
-                ),
-              )
-            : SizedBox.shrink());
+                      width: 2)),
+              child: Text(
+                "Submit",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w800),
+              ),
+            ),
+          )
+        : SizedBox.shrink();
   }
 }

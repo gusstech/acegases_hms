@@ -27,20 +27,28 @@ class _SplashScreen extends State<SplashScreen> {
     // Utils.setFirebaseAnalyticsCurrentScreen(Constants.analyticsSplashScreen);
     super.initState();
     _initPackageInfo();
-    Future.delayed(Duration(milliseconds: 500), () {
+    Future.delayed(Duration(milliseconds: 1000), () {
       startTimer();
     });
   }
 
   Future<void> _initPackageInfo() async {
     FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.instance;
+    await remoteConfig.setConfigSettings(RemoteConfigSettings(
+      fetchTimeout: Duration(seconds: 10),
+      minimumFetchInterval: Duration
+          .zero, // Forces Remote Config to fetch on every app start during development
+    ));
+
     await remoteConfig.fetchAndActivate();
+
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     Appcache.packageInfo = packageInfo;
     String currentLiveVersion =
         remoteConfig.getValue("current_version").asString();
     String currentLiveBuild = remoteConfig.getValue("build_version").asString();
-
+    print(remoteConfig.toString());
+    print(packageInfo.toString());
     Appcache.liveVersion = "$currentLiveVersion.$currentLiveBuild";
   }
 

@@ -157,7 +157,7 @@ class ImageController extends DisposableProvider {
         barrierDismissible: true,
         builder: (context) => CustomAlertDialog(
           type: CustomAlertType.error,
-          description: "Failed to upload image.\nPlease contact admin.",
+          description: "Failed to upload image.\nPlease contact admin.\n$error",
           popButtonText: "OKAY",
         ),
       );

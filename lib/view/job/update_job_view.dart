@@ -14,6 +14,7 @@ import 'package:acegases_hms/model/trip_model/trip_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
@@ -543,10 +544,15 @@ class _UpdateJobDetailViewDartViewState
                                                                           .circular(
                                                                               6))),
                                                       onPressed: () {
+                                                        EasyLoading.show(
+                                                            maskType:
+                                                                EasyLoadingMaskType
+                                                                    .black);
                                                         controller.updateImage(
                                                             context,
                                                             widget.data.jobNo,
                                                             null);
+                                                        EasyLoading.dismiss();
                                                       },
                                                       child: Text(
                                                         "UPDATE",
