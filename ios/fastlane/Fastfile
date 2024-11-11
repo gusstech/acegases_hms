@@ -76,16 +76,16 @@ platform :ios do
     #   skip_screenshots: true,
     #   skip_metadata: true
     # )
-    # deliver(
-    #   # build_number: '830',
-    #   ipa: "Runner.ipa",
-    #   submit_for_review: true,
-    #   automatic_release: true,
-    #   force: true, # Skip HTMl report verification
-    #   skip_metadata: true,
-    #   skip_screenshots: true,
-    #   # skip_binary_upload: true
-    # )
+    deliver(
+      # build_number: '830',
+      ipa: "Runner.ipa",
+      submit_for_review: true,
+      automatic_release: true,
+      force: true, # Skip HTMl report verification
+      skip_metadata: true,
+      skip_screenshots: true,
+      # skip_binary_upload: true
+    )
   end
 
 end

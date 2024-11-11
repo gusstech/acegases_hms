@@ -644,24 +644,23 @@ class _PtiViewState extends State<PtiView> with AppRemoteConfig {
               print(controller.ptiRemark.text);
 
               ///TODO : remove after confirmation
-              // if (!value.checklistData.any((e) => e.subcategories
-              //     .any((g) => g.status == PTISliderStatus.none))) {
-              //   EasyLoading.show(maskType: EasyLoadingMaskType.black);
-              //   final bool result = await Provider.of<ImageController>(
-              //           context,
-              //           listen: false)
-              //       .updateImage(context, null, true);
-              //   EasyLoading.dismiss();
-              //   if (result) {
-              //     controller.savePTICheckList(context).then((v) {
-              //       value.ptiCheckStatus = v;
-              //       if (v) {
-              //         Navigator.pushReplacementNamed(
-              //             context, AppRoutes.homeScreenRoute);
-              //       }
-              //     });
-              //   }
-              // }
+              if (!value.checklistData.any((e) => e.subcategories
+                  .any((g) => g.status == PTISliderStatus.none))) {
+                EasyLoading.show(maskType: EasyLoadingMaskType.black);
+                final bool result =
+                    await Provider.of<ImageController>(context, listen: false)
+                        .updateImage(context, null, true);
+                EasyLoading.dismiss();
+                if (result) {
+                  controller.savePTICheckList(context).then((v) {
+                    value.ptiCheckStatus = v;
+                    if (v) {
+                      Navigator.pushReplacementNamed(
+                          context, AppRoutes.homeScreenRoute);
+                    }
+                  });
+                }
+              }
               // if (value.checklistData.any((element) =>
               //     (element.subcategories.any((element) =>
               //         element.status ==
