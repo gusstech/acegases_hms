@@ -1,0 +1,7 @@
+The Ace Gases Driver App is designed exclusively for Ace Gases employees to simplify and streamline daily operational tasks for drivers. This app allows drivers to log in, select their assigned vehicle for the day, and voluntarily submit a pre-delivery check report.
+
+Drivers can easily view and manage their assigned jobs directly from the app, ensuring they stay on top of their tasks. The app also includes "Start Driving" and "Stop Driving" features, allowing drivers to signal when they are actively working. Since shifts are shared among 2-3 drivers, they can take turns starting and stopping their driving sessions to keep the process organized and smooth.
+
+Additionally, drivers can update the status of their jobs and make modifications or adjustments to job details as needed, ensuring real-time accuracy and communication with the web application.
+
+This app enhances job management and provides a seamless way for Ace Gases drivers to perform their daily responsibilities efficiently.
